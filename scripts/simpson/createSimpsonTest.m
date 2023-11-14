@@ -1,0 +1,13 @@
+function tests = createSimpsonTest(n, m)
+    % Define a cell array of test case structures with Chebyshev polynomials
+    tests = cell(m, 1);
+    for i = 1:m
+        coefficients = rand(1, n + 1) * 2 - 1;
+        newTest = struct(...
+            'a', -1,...
+            'b', 1,...
+            'N', 10,...
+            'f', coefficients);
+        tests{i} = newTest;
+    end
+end

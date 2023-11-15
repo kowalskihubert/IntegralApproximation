@@ -1,7 +1,6 @@
 function wn = generateChebyshevCombination(T, U, coefficients)
     % T - cell array of Chebyshev polynomials of the first kind
     % U - cell array of Chebyshev polynomials of the second kind
-    % n - the degree of the polynomial combination
     % coefficients - array of coefficients a_k
 
     % Generate the function wn(x)

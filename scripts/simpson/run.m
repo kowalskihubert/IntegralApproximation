@@ -1,6 +1,6 @@
-n = 15;
+n = 3;
 m = 6;
-[U, T] = generateChebyshevPolynomials(n);
+[T, U] = generateChebyshevPolynomials(n);
 
 testCases  = createSimpsonTest(n, m);
 simpsonTest(testCases, T, U);

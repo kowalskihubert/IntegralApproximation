@@ -7,16 +7,16 @@ function simpsonTest(tests, T, U)
         testCase = tests{i};
         a = testCase.a;
         b = testCase.b;
-        f = testCase.f;
+        coefficients = testCase.f;
         N = testCase.N;
         
-        func = generateChebyshevCombination(T, U, f);
+        func = generateChebyshevCombination(T, U, coefficients);
 
         % Compute the "true" integral using MATLAB's integral function
         trueIntegral = integral(func, a, b);
         
         % Compute the Simpson integral using a generic simpson function
-        simpsonIntegral = simpson(f, a, b, N);
+        simpsonIntegral = simpson(coefficients, a, b, N);
         
         % Calculate the absolute differences
         differenceSimpson = abs(trueIntegral - simpsonIntegral);

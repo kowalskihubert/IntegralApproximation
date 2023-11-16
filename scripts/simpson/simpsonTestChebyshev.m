@@ -1,4 +1,4 @@
-function simpsonTest(tests, T, U)
+function simpsonTestChebyshev(tests, T, U)
     % Display header
     fprintf('%-8s %-20s %-20s %-20s %-20s\n', 'Test #', 'True Integral', 'Simpson', 'Simpson Diff', 'Relative Error (%)');
     
@@ -9,7 +9,6 @@ function simpsonTest(tests, T, U)
         b = testCase.b;
         coefficients = testCase.f;
         N = testCase.N;
-        
         func = generateChebyshevCombination(T, U, coefficients);
 
         % Compute the "true" integral using MATLAB's integral function

@@ -1,15 +1,3 @@
-%{
-function I = simpson(coefficients, a, b, N)
-    h = (b - a) / N;
-    I = 0;
-    for k = 1:N
-        xLeft = a + (k-1) * h;
-        xRight = a + k * h;
-        I = I + simpsonSimplified(coefficients, xLeft, xRight);
-    end
-end
-%}
-
 function I = simpson(coefficients, a, b, N)
     % coefficients - wektor współczynników wielomianu
     % a - dolna granica całkowania
@@ -39,8 +27,8 @@ end
 
 function y = polynomialValue(coefficients, x)
     N = length(coefficients) - 1; % Stopień wielomianu
-    T = zeros(N+1, length(x)); % Tablica do przechowywania wartości T_k(x)
-    U = zeros(N+1, length(x)); % Tablica do przechowywania wartości U_k(x)
+    T = zeros(N+1, 1); % Tablica do przechowywania wartości T_k(x)
+    U = zeros(N+1, 1); % Tablica do przechowywania wartości U_k(x)
     
     % Inicjalizacja pierwszych dwóch wartości wielomianów Czebyszewa
     T(1,:) = 1; % T_0(x) = 1

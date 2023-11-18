@@ -1,39 +1,34 @@
-function I = simpsonSimplified(f, a, b)
+function I = simpsonSimplified(coefficients, a, b)
     % Chebyshev polynomials of the first and second kinds
-    function T = ChebyshevT(k, x)
-        if k == 0
-            T = 1;
-        elseif k == 1
-            T = x;
-        else
-            T = 2 * x * ChebyshevT(k - 1, x) - ChebyshevT(k - 2, x);
-        end
-    end
-
-    function U = ChebyshevU(k, x)
-        if k == 0
-            U = 1;
-        elseif k == 1
-            U = 2 * x;
-        else
-            U = 2 * x * ChebyshevU(k - 1, x) - ChebyshevU(k - 2, x);
-        end
-    end
-
-    n = size(f,2);
+    n = numel(coefficients);
     % Calculate w_n(x) using the Chebyshev polynomials and coefficients from function f
-    function w = value(f, n, x)
-        w = 0;
-        for k = 1:n
-            w = w + f(k) * ChebyshevT(k, x) * ChebyshevU(k, x);
+    function w = value(coefficients, n, x)
+        T = 1;
+        U = 1;
+        w = coefficients(1) * T * U;
+        if n > 1
+            T_next = x;
+            U_next = 2 * x;
+            w = w + coefficients(2) * T_next * U_next;
+            for k = 2:(n-1)
+                T_temp = T;
+                T = T_next;
+                T_next = 2 * x * T - T_temp; 
+
+                U_temp = U;
+                U = U_next;
+                U_next = 2 * x * U - U_temp;
+                
+                w = w + coefficients(k + 1) * T_next * U_next;
+            end
         end
     end
     
     % Calculate the values of w_n(x) at the points a, midpoint, and b
-    fa = value(f, n, a);
-    fm = value(f, n, (a + b) / 2);
-    fb = value(f, n, b);
-    
+    fa = value(coefficients, n, a);
+    fm = value(coefficients, n, (a + b) / 2);
+    fb = value(coefficients, n, b);
+
     % Calculate the approximate value of the integral
     I = ((b - a) / 6) * (fa + 4 * fm + fb);
 end

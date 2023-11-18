@@ -1,47 +1,46 @@
-function I = simpson(coefficients, a, b, N)
-    % coefficients - wektor współczynników wielomianu
-    % a - dolna granica całkowania
-    % b - górna granica całkowania
-    % N - liczba podprzedziałów (powinna być parzysta)
+function I = simpson(a, b, N, polynomialValue, coefficients)
+%SIMPSON Oblicza całkę funkcji wielomianowej metodą Simpsona.
+%   Funkcja SIMPSON przyjmuje granice całkowania a i b, liczbę podprzedziałów N,
+%   wskaźnik do funkcji obliczającej wartość wielomianu 'polynomialValue'
+%   oraz wektor współczynników wielomianu 'coefficients'. Zwraca przybliżoną wartość
+%   całki oznaczonej funkcji wielomianowej na przedziale [a, b] używając metody Simpsona.
+%
+%   Argumenty:
+%       a             - Dolna granica całkowania.
+%       b             - Górna granica całkowania.
+%       N             - Liczba równych podprzedziałów, na które dzielony jest przedział [a, b].
+%       polynomialValue - Uchwyt do funkcji, która oblicza wartość wielomianu
+%                         w danym punkcie.
+%       coefficients    - Wektor współczynników wielomianu, z których każdy 
+%                         odpowiada kolejnemu stopniowi wielomianu.
+%
+%   Wyjście:
+%       I             - Przybliżona wartość całki oznaczonej funkcji wielomianowej
+%                         na przedziale [a, b].
+%
+%   Przykład użycia:
+%       coeff = [1, 0, -1];
+%       a = 0;  % Dolna granica całkowania
+%       b = 1;  % Górna granica całkowania
+%       N = 10; % Liczba podprzedziałów
+%       I = simpson(a, b, N, @polynomialValue, coeff);  % Obliczenie całki
+%
 
-    H = (b - a) / N; % Obliczenie szerokości podprzedziału
-
+    % Obliczenie szerokości podprzedziału
+    H = (b - a) / N;
     % Inicjalizacja wartości całki
     I = polynomialValue(coefficients, a) + polynomialValue(coefficients, b);
 
-    % Obliczenie sumy dla parzystych indeksów (4*f(a + kH + H/2))
+    % Obliczenie pierwszej części sumy
     for k = 0:N-1
         I = I + 4 * polynomialValue(coefficients, a + k*H + H/2);
     end
 
-    % Obliczenie sumy dla nieparzystych indeksów (2*f(a + kH))
-    % Pomijamy pierwszy i ostatni punkt, bo już zostały dodane
+    % Obliczenie drugiej części sumy
     for k = 1:N-1
         I = I + 2 * polynomialValue(coefficients, a + k*H);
     end
 
     % Zakończenie obliczenia całki
     I = I * (H / 6);
-end
-
-
-function y = polynomialValue(coefficients, x)
-    N = length(coefficients) - 1; % Stopień wielomianu
-    T = zeros(N+1, 1); % Tablica do przechowywania wartości T_k(x)
-    U = zeros(N+1, 1); % Tablica do przechowywania wartości U_k(x)
-    
-    % Inicjalizacja pierwszych dwóch wartości wielomianów Czebyszewa
-    T(1,:) = 1; % T_0(x) = 1
-    T(2,:) = x; % T_1(x) = x
-    U(1,:) = 1; % U_0(x) = 1
-    U(2,:) = 2*x; % U_1(x) = 2x
-    
-    % Obliczanie wartości wielomianów Czebyszewa rekurencyjnie
-    for k = 2:N
-        T(k+1,:) = 2 .* x .* T(k,:) - T(k-1,:);
-        U(k+1,:) = 2 .* x .* U(k,:) - U(k-1,:);
-    end
-    
-    % Obliczanie wartości wielomianu z użyciem wektoryzacji
-    y = sum((coefficients.' .* T) .* U, 1);
 end

@@ -1,4 +1,4 @@
-function [s] = trapezoidal(a, b, N, f, n, a_k)
+function [s] = trapezoidal(a, b, N, f, a_k)
 % Funkcja przybliżająca całkę z funkcji f, przy czym f jest postaci
 % kombinacji wielomianów Czebyszewa od 0 do n włącznie, ze współczynnikami
 % a_k
@@ -18,7 +18,7 @@ H = (b-a)/N;
 k = 1:1:N-1;
 x_k = a + k.*H; % węzły kwadratury poza pierwszym i ostatnim
 
-s = H/2 * (f(n, a_k, a) + f(n, a_k, b) + 2 * sum( f(n, a_k, x_k) ) );
+s = H/2 * (f(a_k, a) + f(a_k, b) + 2 * sum( f(a_k, x_k) ) );
 
 
 end

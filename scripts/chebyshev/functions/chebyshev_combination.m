@@ -1,4 +1,4 @@
-function [w] = chebyshev_combination(n, a_k, x)
+function [w] = chebyshev_combination(a_k, x)
 % Funkcja oblicza wartość w punkcie x funkcji będącej kombinacją
 % wielomianów Czebyszewa I i II rodzaju od 0 do n włącznie, a współczynnikach a_k
 % WEJŚCIE: 
@@ -8,14 +8,12 @@ function [w] = chebyshev_combination(n, a_k, x)
 % WYJŚCIE:
 % y - wartość funkcji w punkcie x (punktach x)
 
-assert(length(a_k) == n+1, "Wektor współczynników musi mieć długość n+1.")
-
+n = length(a_k) - 1;
 t0 = 1; % wartość wielomianu T0
 u0 = 1; % wartość wielomianu U0
 
 t1 = x; % wartość wielomianu T1 w punkcie x, t2 = 2x*t1 - t0
 u1 = 2.*x;  % wartość wielomianu U1 w punkcie x, u2 = 2x*u1 - u0
-
 w = a_k(1) .* t0 .* u0 + a_k(2) .* t1 .* u1;
 
 for k = 2:n

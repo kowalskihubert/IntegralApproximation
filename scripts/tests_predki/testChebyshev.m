@@ -19,7 +19,7 @@ function testChebyshev(tests, T, U)
         simpsonIntegral = simpson(a, b, N, @polynomialValue, coefficients);
         
         % Compute the trapezoidal integral
-        trapezoidalIntegral = trapezoidal(a, b, N, @chebyshev_combination, size(coefficients, 2) - 1, coefficients);
+        trapezoidalIntegral = trapezoidal(a, b, N, @chebyshev_combination, coefficients);
 
         % Calculate the absolute differences for Simpson
         differenceSimpson = abs(trueIntegral - simpsonIntegral);

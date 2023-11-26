@@ -1,5 +1,5 @@
-function [tableData, columnNames] = testChebyshevTable(tests)
-% TESTCHEBYSHEVTABLE Tworzy tabelę wyników całkowania dla zestawu testów.
+function testChebyshev(tests)
+% TESTCHEBYSHEV Wyświetla tabelę z wynikami całkowania dla zestawu testów.
 %   Funkcja oblicza całki numeryczne za pomocą metody Simpsona i trapezów,
 %   porównuje je z dokładnymi wartościami całki i prezentuje błędy bezwzględne
 %   oraz procentowe dla różnych wartości N i współczynników wielomianów 
@@ -13,20 +13,21 @@ function [tableData, columnNames] = testChebyshevTable(tests)
 %           N - liczba podprzedziałów użyta w metodach numerycznych.
 %
 %   Wyjście:
-%       tableData - dane tabeli zawierające wyniki testów,
-%       columnNames - nazwy kolumn tabeli.
+%       Funkcja nie zwraca wartości bezpośrednio, wyniki są wyświetlane
+%       na standardowe wyjście w formie tabeli.
 %
 %   Użycie:
-%       [daneTabeli, nazwyKolumn] = testChebyshevTable({struct('a', 0, 'b', 1, 'f', [1,2,3], 'N', 10), ...});
+%       testChebyshev({struct('a', 0, 'b', 1, 'f', [1,2,3], 'N', 10), ...});
 %       gdzie "..." oznacza dalsze struktury testowe.
+%
+%   Przykład wyjścia:
+%       Test #   True Integral       Simpson             Simpson Diff         Simpson Error (%)   Trapezoidal         Trapezoidal Diff    Trapezoidal Error (%)
 %
 %   Zobacz też INTEGRAL, SIMPSON, TRAPEZOIDAL.
 
-    % Inicjalizacja nazw kolumn
-    columnNames = {'Test #', 'True Integral', 'Simpson', 'Simpson Diff', 'Simpson Error (%)', 'Trapezoidal', 'Trapezoidal Diff', 'Trapezoidal Error (%)'};
-    % Inicjalizacja danych tabeli
-    tableData = cell(length(tests), length(columnNames));
-
+    % Wyświetlanie nagłówka tabeli
+    fprintf('%-8s %-20s %-20s %-20s %-20s %-20s %-20s %-20s\n', 'Test #', 'True Integral', 'Simpson', 'Simpson Diff', 'Simpson Error (%)', 'Trapezoidal', 'Trapezoidal Diff', 'Trapezoidal Error (%)');
+    
     % Iteracja przez każdy przypadek testowy i obliczanie całek
     for i = 1:length(tests)
         testCase = tests{i};
@@ -34,32 +35,30 @@ function [tableData, columnNames] = testChebyshevTable(tests)
         b = testCase.b;
         coefficients = testCase.f;
         N = testCase.N;
-
-        % Definicja funkcji pod całką
-        func = @(x) chebyshev_combination(coefficients, x);
-
-        % Obliczanie dokładnej całki za pomocą funkcji integral MATLAB-a
-        trueIntegral = integral(func, a, b);
         
-        % Obliczanie całki metodą Simpsona
+        func = @(x) chebyshev_combination(coefficients, x);
+        % Obliczanie "prawdziwej" całki przy użyciu funkcji integral MATLAB-a
+        trueIntegral = integral(func, a, b, 'ArrayValued', true);
+        
+        % Obliczanie całki metodą Simpsona przy użyciu generycznej funkcji simpson
         simpsonIntegral = simpson(a, b, N, @chebyshev_combination, coefficients);
         
         % Obliczanie całki metodą trapezów
         trapezoidalIntegral = trapezoidal(a, b, N, @chebyshev_combination, coefficients);
 
-        % Obliczanie błędów bezwzględnych dla metody Simpsona
+        % Obliczanie absolutnych różnic dla metody Simpsona
         differenceSimpson = abs(trueIntegral - simpsonIntegral);
         
-        % Obliczanie błędów bezwzględnych dla metody trapezoidalnej
+        % Obliczanie absolutnych różnic dla metody trapezoidalnej
         differenceTrapezoidal = abs(trueIntegral - trapezoidalIntegral);
         
-        % Obliczanie błędów względnych procentowo dla metody Simpsona
+        % Obliczanie procentowego błędu względnego dla metody Simpsona
         relativeErrorSimpson = 100 * differenceSimpson / abs(trueIntegral);
         
-        % Obliczanie błędów względnych procentowo dla metody trapezoidalnej
+        % Obliczanie procentowego błędu względnego dla metody trapezoidalnej
         relativeErrorTrapezoidal = 100 * differenceTrapezoidal / abs(trueIntegral);
 
-        % Kompletowanie danych do tabeli
-        tableData(i,:) = {i, trueIntegral, simpsonIntegral, differenceSimpson, relativeErrorSimpson, trapezoidalIntegral, differenceTrapezoidal, relativeErrorTrapezoidal};
+        % Wyświetlanie sformatowanego wyniku
+        fprintf('%-8d %-20.12f %-20.12f %-20.12f %-20.2f %-20.12f %-20.12f %-20.2f\n', i, trueIntegral, simpsonIntegral, differenceSimpson, relativeErrorSimpson, trapezoidalIntegral, differenceTrapezoidal, relativeErrorTrapezoidal);
     end
 end

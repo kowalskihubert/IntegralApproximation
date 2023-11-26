@@ -9,11 +9,19 @@ function [w] = chebyshev_combination(a_k, x)
 % y - wartość funkcji w punkcie x (punktach x)
 
 n = length(a_k) - 1;
+
+if n == 0
+   w = a_k(1)* ones(size(x));
+   return
+end
+
+
 t0 = 1; % wartość wielomianu T0
 u0 = 1; % wartość wielomianu U0
 
 t1 = x; % wartość wielomianu T1 w punkcie x, t2 = 2x*t1 - t0
 u1 = 2.*x;  % wartość wielomianu U1 w punkcie x, u2 = 2x*u1 - u0
+
 w = a_k(1) .* t0 .* u0 + a_k(2) .* t1 .* u1;
 
 for k = 2:n

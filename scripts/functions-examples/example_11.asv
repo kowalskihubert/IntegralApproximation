@@ -1,0 +1,39 @@
+function [w] = example_11(x)
+% Przykład nr 1 funkcji w = w(x) będącej kombinacją wielomianów Czebyszewa 
+% dla ustalonych współczynników a_k. Ten wielomian w(x) jest stopnia 10.
+% Ten wielomian jest postaci sumy od k = 0 do n z wyrażeń ak* Tk(x)^2. Jest
+% to zatem kombinacja ale tylko wielomianów Czebyszewa I rodzaju.
+
+a_k = [1 1 1 1 1 1];
+n = length(a_k) - 1;
+
+if n == 0
+   w = a_k(1)* ones(size(x));
+   return
+end
+
+
+t0 = 1; % wartość wielomianu T0
+u0 = 1; % wartość wielomianu U0
+
+t1 = x; % wartość wielomianu T1 w punkcie x, t2 = 2x*t1 - t0
+u1 = 2.*x;  % wartość wielomianu U1 w punkcie x, u2 = 2x*u1 - u0
+
+w = a_k(1) .* t0 .* u0 + a_k(2) .* t1 .* u1;
+
+for k = 2:n
+    t = 2 .* x .* t1 - t0; % aktualnie obliczany wielomian T
+    t0 = t1; % uaktualnienie t0 i t1
+    t1 = t;
+
+    u = 2 .* x .* u1 - u0; % aktualnie obliczany wielomian U
+    u0 = u1;
+    u1 = u;
+
+    w = w + a_k(k+1) .* t .* u;
+end
+
+
+end
+
+

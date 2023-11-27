@@ -17,27 +17,35 @@ function [results, columnNames] = Testing_chebyshev_gui()
     
     
     % Loop through the examples and perform the calculations, then print the results
-    columnNames = {'Test #', 'a', 'b', 'N', 'Trapezoidal', 'Integral', 'Trap Error', 'Simpson', 'Simp Error';};
-    results = {};
-    for i = 1:length(examples)
-        a = examples{i}.a;
-        b = examples{i}.b;
-        N = examples{i}.N;
-        func = examples{i}.Func;
-        
-        % Calculate the integral using the trapezoidal method
-        trapezoidal_result = round(trapezoidal_general(a, b, N, func), 8);
-        
-        % Calculate the integral using the Simpson's method
-        simpson_result = round(simpson_general(a, b, N, func), 8);
-        
-        % Calculate the integral using MATLAB's integral function for comparison
-        integral_result = integral(func, a, b);
-        
-        % Calculate the relative errors and round to four decimal places
-        trap_relative_error = abs(integral_result - trapezoidal_result) / abs(integral_result);
-        simp_relative_error = abs(integral_result - simpson_result) / abs(integral_result);
+    columnNames = {'Test #', 'a', 'b', 'N', 'Integral', 'Trapezoidal', 'Trap Error', 'Simpson', 'Simp Error'};
+    % Loop through the examples and perform the calculations, then print the results
+columnNames = {'Test #', 'a', 'b', 'N', 'Integral', 'Trapezoidal', 'Trap Abs Error', 'Trap Rel Error', 'Simpson', 'Simp Abs Error', 'Simp Rel Error'};
+results = {};
+for i = 1:length(examples)
+    a = examples{i}.a;
+    b = examples{i}.b;
+    N = examples{i}.N;
+    func = examples{i}.Func;
     
-        results(end+1, :) = {i, a, b, N, trapezoidal_result, integral_result, trap_relative_error, simpson_result, simp_relative_error};
-    end
+    % Calculate the integral using MATLAB's integral function for comparison
+    integral_result = integral(func, a, b);
+    
+    % Calculate the integral using the trapezoidal method
+    trapezoidal_result = round(trapezoidal_general(a, b, N, func), 8);
+    
+    % Calculate the absolute and relative errors for the trapezoidal method
+    trap_abs_error = abs(integral_result - trapezoidal_result);
+    trap_rel_error = trap_abs_error / abs(integral_result);
+    
+    % Calculate the integral using the Simpson's method
+    simpson_result = round(simpson_general(a, b, N, func), 8);
+    
+    % Calculate the absolute and relative errors for Simpson's method
+    simp_abs_error = abs(integral_result - simpson_result);
+    simp_rel_error = simp_abs_error / abs(integral_result);
+
+    % Store the results in the new order with absolute and relative errors
+    results(end+1, :) = {i, a, b, N, integral_result, trapezoidal_result, trap_abs_error, trap_rel_error, simpson_result, simp_abs_error, simp_rel_error};
+end
+
 end

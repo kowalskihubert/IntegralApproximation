@@ -5,6 +5,6 @@ m = 6;
 
 %testChebyshev(testCases);
 
-coeffs = [1, 2, 3, 4, 5];
+coeffs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 N = 50;
-[bestN, bestNError] = kaniastyKowalskiError(coeffs, -1, 1, @simpson, N)
+[bestN, bestNError] = kaniastyKowalskiError(coeffs, -10, 10, @simpson, N)

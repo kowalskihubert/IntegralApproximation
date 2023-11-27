@@ -31,4 +31,7 @@ function [bestN, bestNError] = kaniastyKowalskiError(coefficients, a, b, method,
    [bestNError, bestN] = min(errors); % Wybór optymalnej liczby przedziałów
    
    plot(1:maxN, errors, "-o"); % Rysowanie wykresu błędów
+   xlabel('Liczba przedziałów N'); % Opis osi X
+   ylabel('Łączny błąd całkowania i kara'); % Opis osi Y
+   title('Zależność błędu całkowania od liczby przedziałów N');
 end

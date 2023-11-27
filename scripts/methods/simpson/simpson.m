@@ -1,5 +1,21 @@
 function I = simpson(a, b, N, polynomialValue, coefficients)
-%SIMSPON Oblicza całkę funkcji wielomianowej metodą Simpsona wektoryzowanie.
+% SIMPSON Oblicza całkę oznaczoną funkcji wielomianowej metodą Simpsona.
+%   I = SIMPSON(a, b, N, polynomialValue, coefficients) wykonuje obliczenia
+%   całki oznaczonej dla funkcji wielomianowej w przedziale [a, b] używając
+%   metody Simpsona.
+%
+%   Argumenty:
+%       a - początek przedziału całkowania.
+%       b - koniec przedziału całkowania.
+%       N - liczba równych podprzedziałów, na które dzielony jest przedział
+%           całkowania. Musi być liczbą całkowitą większą od 1.
+%       polynomialValue - zewnętrzna funkcja, która oblicza wartość funkcji
+%                         wielomianowej dla zadanych współczynników i wartości x.
+%       coefficients - wektor współczynników funkcji wielomianowej.
+%
+%   Zwracana wartość:
+%       I - przybliżona wartość całki oznaczonej funkcji wielomianowej
+%           obliczona metodą Simpsona.
 
     % Obliczenie szerokości podprzedziału
     H = (b - a) / N;

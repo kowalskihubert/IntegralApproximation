@@ -1,4 +1,4 @@
-function [results, columnNames] = Testing_chebyshev_gui()
+function [results, columnNames] = runTestsGUI()
     examples = cell(12,1);
     
     % Define each example with a structure

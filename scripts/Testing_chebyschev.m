@@ -2,9 +2,9 @@
 
 addpath("functions-examples/");
 
-Macierz_wynikow = zeros(24, 7);
-Macierz_wynikow(:,1) = [1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12];
-Macierz_wynikow(:,2) = [1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2];
+%Macierz_wynikow = zeros(24, 7);
+%Macierz_wynikow(:,1) = [1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8 9 9 10 10 11 11 12 12];
+%Macierz_wynikow(:,2) = [1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2];
 
 a = -1;
 b = 1;
@@ -34,24 +34,34 @@ sd = trapezoidal(a, b, N, @chebyshev_combination, a_k)
 % stworzyć funkcję chebyshev_example_p (dla pewnego p), przy czym można w
 % tej funkcji skorzystać z ogólnej chebyshev_combination
 
+examples = cell(12,1);
+
 % Example 1
-a = -2;
-b = 10;
-N = 50;
-s1 = trapezoidal_general(a, b, N, @chebyshev_example_1)
-s1_d = integral(@chebyshev_example_1, a, b)
-blad_wzgl = abs(s1_d - s1) / abs(s1_d)
-Macierz_wynikow(1, 3) = s1;
-Macierz_wynikow(1,4) = s1_d;
-Macierz_wynikow(1,5) = blad_wzgl;
-Macierz_wynikow(2, 3) = simpson_general(a,b,N,@chebyshev_example_1);
-Macierz_wynikow(2, 4) = integral(@chebyshev_example_1, a, b);
-Macierz_wynikow(2,5) = abs( (Macierz_wynikow(2,4)-Macierz_wynikow(2,3) )/Macierz_wynikow(2,4) )
+%a = -2;
+%b = 10;
+%N = 50;
+%s1 = trapezoidal_general(a, b, N, @chebyshev_example_1)
+%s1_d = integral(@chebyshev_example_1, a, b)
+%blad_wzgl = abs(s1_d - s1) / abs(s1_d)
+%Macierz_wynikow(1, 3) = s1;
+%Macierz_wynikow(1,4) = s1_d;
+%Macierz_wynikow(1,5) = blad_wzgl;
+%Macierz_wynikow(2, 3) = simpson_general(a,b,N,@chebyshev_example_1);
+%Macierz_wynikow(2, 4) = integral(@chebyshev_example_1, a, b);
+%Macierz_wynikow(2,5) = abs( (Macierz_wynikow(2,4)-Macierz_wynikow(2,3) )/Macierz_wynikow(2,4) )
+
+examples{1} = struct(...
+    'a', -2, ...
+    'b', 10, ...
+    'N', 50, ...
+    'Func', @chebyshev_example_1);
+
 
 % Example 2
 s2 = trapezoidal_general(a, b, N, @chebyshev_example_2)
 s2_d = integral(@chebyshev_example_2, a, b)
 blad_wzgl_2 = abs(s2_d - s2) / abs(s2_d)
+examples{2} = struct('a', -2, 'b', 10, 'N', 15, 'Func', @chebyshev_example_2);
 
 % Example 3
 a = 1;
@@ -144,4 +154,9 @@ s12 = trapezoidal_general(a, b, N, @example_12)
 s12_d = integral(@example_12, a, b)
 blad_wzgl_12 = abs(s12_d - s12) / abs(s12_d)
 
+% Assuming Macierz_wynikow is the matrix containing the results
+disp('Test #   True Integral       Simpson           Simpson Diff       Simpson Error (%)   Trapezoidal       Trapezoidal Diff   Trapezoidal Error (%)');
+for i = 1:size(Macierz_wynikow, 1)
+    fprintf('%-8d %-20.12f %-20.12f %-20.12f %-20.2f %-20.12f %-20.12f %-20.2f\n', Macierz_wynikow(i, :));
+end
 

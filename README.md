@@ -1,7 +1,7 @@
 # Integral Approximation Project
 
 ## Overview
-This project focuses on the numerical approximation of integrals using Chebyshev polynomials. It implements and compares the Trapezoidal and Simpson's methods for integral approximation.
+This project focuses on the numerical approximation of integrals using [Chebyshev polynomials](https://en.wikipedia.org/wiki/Chebyshev_polynomials). It implements and compares the Trapezoidal and Simpson's methods for integral approximation.
 
 ## Features
 - Implements numerical integration using Trapezoidal and Simpson's methods.
@@ -10,7 +10,7 @@ This project focuses on the numerical approximation of integrals using Chebyshev
 
 ## Usage
 1. Add the project folders to the MATLAB search path.
-2. Use functions (`trapezoidal`, `simpson`) for approximate integral calculations of chebyshev polynomials. In the project we provide `chebyshev_combination` function that represents polynomials in the form of: $$w_n(x) = \sum_{k=0}^n a_kT_k(x)U_k(x)$$ where $T_k$ is a chebyshev polynomial of the first kind and $U_k$ - of the second kind. To use `chebyshev_combination` with `trapezoidal` (similarly `simpson`) use the following code (**a** - beggining of the integration interval, **b** - end of the integration interval, **N** - number of subintervals in the composite trapezoidal method, **coefficients** - $a_k$ coefficients for the chebyshev polynomial):
+2. Use functions (`trapezoidal`, `simpson`) for approximate integral calculations of Chebyshev polynomials. In the project we provide `chebyshev_combination` function that represents polynomials in the form of: $$w_n(x) = \sum_{k=0}^n a_kT_k(x)U_k(x)$$ where $T_k$ is a Chebyshev polynomial of the first kind and $U_k$ - of the second kind. To use `chebyshev_combination` with `trapezoidal` (similarly `simpson`) use the following code (**a** - beggining of the integration interval, **b** - end of the integration interval, **N** - number of subintervals in the composite trapezoidal method, **coefficients** - $a_k$ coefficients for the Chebyshev polynomial):
 ```matlab
     result = trapezoidal(a, b, N, @chebyshev_combination, coefficients)
 ```

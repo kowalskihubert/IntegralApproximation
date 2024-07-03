@@ -23,7 +23,7 @@ function [bestN, bestNError] = kaniastyKowalskiError(coefficients, a, b, method,
    errors = zeros(1, maxN); % Inicjalizacja wektora błędów
    for N = 1:maxN % Pętla obliczająca błąd dla każdej liczby przedziałów
        approxIntegral = method(a, b, N, @chebyshev_combination, coefficients); % Obliczanie przybliżonej całki
-       unpenalizedError = abs(trueIntegral - approxIntegral) / trueIntegral; % Obliczanie błędu bez kary
+       unpenalizedError = abs((trueIntegral - approxIntegral) / trueIntegral); % Obliczanie błędu bez kary
        penalty = log(1+N); % Obliczanie kary kwadratowej
        errors(N) = unpenalizedError + penalty; % Sumowanie błędu i kary
    end

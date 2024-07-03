@@ -1,3 +1,8 @@
+% Skrypt testujący
+% Skrypt generuje tabelę zawierającą prawdziwe wartości całki oraz całki
+% wyznaczone numerycznie za pomocą metody Simpsona i trapezów dla 12
+% przykładowych funkcji.
+
 examples = cell(12,1);
 
 examples{1} = struct('a', -2, 'b', 10, 'N', 50, 'Func', @chebyshev_example_1);
@@ -10,7 +15,7 @@ examples{7} = struct('a', -1.5, 'b', -1, 'N', 50, 'Func', @chebyshev_example_7);
 examples{8} = struct('a', -1, 'b', 1, 'N', 50, 'Func', @chebyshev_example_8);
 examples{9} = struct('a', -5, 'b', 5, 'N', 50, 'Func', @chebyshev_example_9);
 examples{10} = struct('a', -0.7, 'b', 0, 'N', 50, 'Func', @chebyshev_example_10); 
-examples{11} = struct('a', -1, 'b', -0.5, 'N', 50, 'Func', @example_11);s
+examples{11} = struct('a', -1, 'b', -0.5, 'N', 50, 'Func', @example_11);
 examples{12} = struct('a', -10, 'b', 10, 'N', 100, 'Func', @example_12);
 
 

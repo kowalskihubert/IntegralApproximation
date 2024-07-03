@@ -41,8 +41,8 @@ function [errors_s, errors_t, coeff_indices] = plotN(a, b, coefficients, N)
             simpsonIntegral = simpson(a, b, i, @chebyshev_combination, currentCoefficients);
             
             % Obliczenie błędów względnych
-            errors_s(j, i) = abs(trueIntegral - simpsonIntegral) / trueIntegral;
-            errors_t(j, i) = abs(trueIntegral - trapezoidalIntegral) / trueIntegral;
+            errors_s(j, i) = abs((trueIntegral - simpsonIntegral) / trueIntegral);
+            errors_t(j, i) = abs((trueIntegral - trapezoidalIntegral) / trueIntegral);
         end
     end
 end
